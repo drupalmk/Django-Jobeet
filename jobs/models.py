@@ -8,7 +8,7 @@ class Categories(models.Model):
         db_table = u'categories'
 
 class Jobs(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True) 
     category = models.ForeignKey(Categories, null=True)
     user_id = models.IntegerField(null=True)
     job_type = models.CharField(max_length=255)
