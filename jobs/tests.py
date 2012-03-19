@@ -29,6 +29,12 @@ class JobsTestCase(unittest.TestCase):
     def tearDown(self):
     	self.acme.delete()
 
+class CategoryTestCase(unittest.TestCase):
+
+	def test_get_with_jobs(self):
+		
+		categories = Categories.objects.get_with_jobs()
+		self.assertEqual(2, len(categories))
     # category: 1
     # job_type:    fulltime
     # company:     Extreme Sensio
