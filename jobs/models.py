@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 class Categories(models.Model):
 
@@ -40,6 +41,13 @@ class Jobs(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField(null=True, blank=True)
     expires_at = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = datetime.datetime.now()
+            self.expires_at = self.created_at + datetime.timedelta(30*365/12)
+        # Call the "real" save() method in the base class 'models.Model'
+        super(Jobs, self).save(*args, **kwargs) 
 
     def __unicode__(self):
     	return self.company + 'is looking for ' + self.position
