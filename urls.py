@@ -4,7 +4,15 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+from jobs.models import Jobs, Categories
+admin.site.register(Jobs)
+admin.site.register(Categories)
+
+urlpatterns = patterns('',    
+    url(r'^jobs/$', 'jobs.views.index'),
+    url(r'^jobs/(?P<company>[-\w]+)/(?P<id>\d+)/(?P<position>[-\w]+)/(?P<location>[-\w]+)/$', 'jobs.views.show_job'),
+    #url(r'^jobs/(?P<poll_id>\d+)/results/$', 'polls.views.results'),
+    #url(r'^jobs/(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
     # Examples:
     # url(r'^$', 'jobeet.views.home', name='home'),
     # url(r'^jobeet/', include('jobeet.foo.urls')),

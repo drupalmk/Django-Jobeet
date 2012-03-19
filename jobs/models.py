@@ -4,7 +4,7 @@ class Categories(models.Model):
 
     prepopulated_fields = {"slug": ("name",)}
 
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(max_length=255)
 
@@ -23,9 +23,9 @@ class Jobs(models.Model):
         ('freelance', 'Freelance'),
     )
 
-    id = models.IntegerField(primary_key=True) 
+    id = models.AutoField(primary_key=True) 
     category = models.ForeignKey(Categories, null=True)
-    user_id = models.IntegerField(null=True)
+    user_id = models.IntegerField(null=True, blank=True)
     job_type = models.CharField(max_length=255, choices=JOB_TYPES)
     company = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='jobs', max_length=255, blank=True, null=True)
