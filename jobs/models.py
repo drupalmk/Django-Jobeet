@@ -1,5 +1,7 @@
 from django.db import models
-import datetime
+import uuid
+
+#class JobsManager(models.Manager):
 
 class Categories(models.Model):
 
@@ -24,12 +26,17 @@ class Jobs(models.Model):
         ('freelance', 'Freelance'),
     )
 
+    # def get_file_path(instance, filename):
+    #     ext = filename.split('.')[-1]
+    #     filename = "%s.%s" % (uuid.uuid4(), ext)
+    #     return os.path.join('uploads/jobs/logos', filename)
+
     id = models.AutoField(primary_key=True) 
     category = models.ForeignKey(Categories, null=True)
     user_id = models.IntegerField(null=True, blank=True)
     job_type = models.CharField(max_length=255, choices=JOB_TYPES)
     company = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to='jobs', max_length=255, blank=True, null=True)
+    logo = models.ImageField(upload_to='uploads/jobs/logos', max_length=255, blank=True, null=True)
     url = models.URLField(max_length=255, blank=True)
     position = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -42,14 +49,20 @@ class Jobs(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
     expires_at = models.DateTimeField()
 
+    #objects = JobsManager()
+
     def save(self, *args, **kwargs):
+        import datetime
         if not self.id:
             self.created_at = datetime.datetime.now()
-            self.expires_at = self.created_at + datetime.timedelta(30*365/12)
+
+            import settings
+            self.expires_at = self.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY*365/12)
         else:
             self.updated_at = datetime.datetime.now()
         # Call the "real" save() method in the base class 'models.Model'
         super(Jobs, self).save(*args, **kwargs) 
+
 
     def __unicode__(self):
     	return self.company + 'is looking for ' + self.position
