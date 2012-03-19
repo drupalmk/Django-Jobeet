@@ -23,7 +23,6 @@ class JobsTestCase(unittest.TestCase):
     def test_job_expiration_date_is_30_days_from_creation_date(self):
     	self.acme.save()
     	import settings
-        print self.acme.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY), self.acme.expires_at
     	self.assertEqual(self.acme.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY), self.acme.expires_at)
 
 
@@ -60,3 +59,26 @@ class CategoryTestCase(unittest.TestCase):
     # email:        job@example.com
     # created_at:   2012-09-10
     # expires_at:   2012-10-10
+
+
+from django.test.client import Client
+
+class JobsViewTest(unittest.TestCase):
+    def setUp(self):
+        # Every test needs a client.
+        self.client = Client()
+
+    def test_jobs_on_homepage(self):
+        response = self.client.get('/')
+
+        self.assertEqual(response.status_code, 200)
+
+    # def test_details(self):
+    #     # Issue a GET request.
+    #     response = self.client.get('/customer/details/')
+
+    #     # Check that the response is 200 OK.
+    #     self.assertEqual(response.status_code, 200)
+
+    #     # Check that the rendered context contains 5 customers.
+    #     self.assertEqual(len(response.context['customers']), 5)
