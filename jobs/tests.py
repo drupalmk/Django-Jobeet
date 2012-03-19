@@ -2,6 +2,7 @@ from django.utils import unittest
 from jobs.models import Jobs, Categories
 import datetime
 
+CATEGORIES_WITH_JOBS = 2
 
 class JobsTestCase(unittest.TestCase):
     def setUp(self):
@@ -22,8 +23,8 @@ class JobsTestCase(unittest.TestCase):
     def test_job_expiration_date_is_30_days_from_creation_date(self):
     	self.acme.save()
     	import settings
-    	self.assertEqual(self.acme.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY*365/12), self.acme.expires_at)
-
+        print self.acme.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY), self.acme.expires_at
+    	self.assertEqual(self.acme.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY), self.acme.expires_at)
 
 
     def tearDown(self):
@@ -32,9 +33,9 @@ class JobsTestCase(unittest.TestCase):
 class CategoryTestCase(unittest.TestCase):
 
 	def test_get_with_jobs(self):
-		
 		categories = Categories.objects.get_with_jobs()
-		self.assertEqual(2, len(categories))
+		print categories
+		self.assertEqual(CATEGORIES_WITH_JOBS, len(categories))
     # category: 1
     # job_type:    fulltime
     # company:     Extreme Sensio

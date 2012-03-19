@@ -8,6 +8,12 @@ class CategoriesManager(models.Manager):
         return self.extra(tables=["jobs"],
                           where=["""jobs.category_id = categories.id"""])
 
+
+#class JobsManager(models.Manager):
+ #   def get_active_jobs_by_category(self, cid, limit):
+        
+
+
 class Categories(models.Model):
 
     prepopulated_fields = {"slug": ("name",)}
@@ -33,17 +39,19 @@ class Jobs(models.Model):
         ('freelance', 'Freelance'),
     )
 
-    # def get_file_path(instance, filename):
-    #     ext = filename.split('.')[-1]
-    #     filename = "%s.%s" % (uuid.uuid4(), ext)
-    #     return os.path.join('uploads/jobs/logos', filename)
+    def get_file_path(instance, filename):
+        import uuid
+        import os
+        ext = filename.split('.')[-1]
+        filename = "%s.%s" % (uuid.uuid4(), ext)
+        return os.path.join('uploads/jobs/logos', filename)
 
     id = models.AutoField(primary_key=True) 
     category = models.ForeignKey(Categories, null=True)
     user_id = models.IntegerField(null=True, blank=True)
     job_type = models.CharField(max_length=255, choices=JOB_TYPES)
     company = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to='uploads/jobs/logos', max_length=255, blank=True, null=True)
+    logo = models.ImageField(upload_to=get_file_path, max_length=255, blank=True, null=True)
     url = models.URLField(max_length=255, blank=True)
     position = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -62,9 +70,8 @@ class Jobs(models.Model):
         import datetime
         if not self.id:
             self.created_at = datetime.datetime.now()
-
             import settings
-            self.expires_at = self.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY*365/12)
+            self.expires_at = self.created_at + datetime.timedelta(settings.JOB_EXPIRATION_DAY)
         else:
             self.updated_at = datetime.datetime.now()
         # Call the "real" save() method in the base class 'models.Model'
