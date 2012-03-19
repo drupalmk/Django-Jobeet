@@ -46,6 +46,8 @@ class Jobs(models.Model):
         if not self.id:
             self.created_at = datetime.datetime.now()
             self.expires_at = self.created_at + datetime.timedelta(30*365/12)
+        else:
+            self.updated_at = datetime.datetime.now()
         # Call the "real" save() method in the base class 'models.Model'
         super(Jobs, self).save(*args, **kwargs) 
 
