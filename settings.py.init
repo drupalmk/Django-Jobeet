@@ -3,6 +3,9 @@
 
 JOB_BY_CATEGORY_LIMIT = 10
 
+
+JOB_EXPIRATION_DAY = 30
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -148,6 +151,7 @@ INSTALLED_APPS = (
      'django.contrib.admindocs',
 
      'debug_toolbar',
+     'autofixture',
 )
 
 # A sample logging configuration. The only tangible logging
