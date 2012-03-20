@@ -1,6 +1,6 @@
 import os
-#import sys
+import sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'jobeet.settings'
-#.path.append(r'/home/Devel/django/django_toolbar/debug_toolbar')
+sys.path.append(r'/home/tools/django/toolbar/debug_toolbar')
 
 
