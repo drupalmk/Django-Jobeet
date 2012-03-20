@@ -11,7 +11,7 @@ admin.site.register(Categories)
 import settings
 
 urlpatterns = patterns('',  
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.STATIC_ROOT}),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     url(r'^$', 'jobs.views.index', name='front'),
     url(r'^jobs/$', 'jobs.views.index', name='jobs'),
     url(r'^jobs/(?P<company>[-\w]+)/(?P<id>\d+)/(?P<position>[-\w]+)/(?P<location>[-\w]+)/$', 'jobs.views.show_job', name="front_jobs"),
