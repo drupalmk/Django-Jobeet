@@ -1,5 +1,8 @@
 # Django settings for cities_django project.
 
+
+JOB_BY_CATEGORY_LIMIT = 10
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -79,6 +82,10 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = (
   '/home/marek/devel/django/jobeet/static/',
+)
+
+FIXTURE_DIRS = (
+  '/home/marek/devel/django/jobeet/fixtures/',
 )
 
 
