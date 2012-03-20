@@ -77,10 +77,12 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 
-import os
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   '/home/marek/devel/django/jobeet/static/',
+)
+
+FIXTURE_DIRS = (
+  '/home/marek/devel/django/jobeet/static/fixtures/',
 )
 
 
