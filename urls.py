@@ -8,9 +8,13 @@ from jobs.models import Jobs, Categories
 admin.site.register(Jobs)
 admin.site.register(Categories)
 
-urlpatterns = patterns('',    
-    url(r'^jobs/$', 'jobs.views.index'),
-    url(r'^jobs/(?P<company>[-\w]+)/(?P<id>\d+)/(?P<position>[-\w]+)/(?P<location>[-\w]+)/$', 'jobs.views.show_job'),
+import settings
+
+urlpatterns = patterns('',  
+    #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
+    url(r'^$', 'jobs.views.index', name='front'),
+    url(r'^jobs/$', 'jobs.views.index', name='jobs'),
+    url(r'^jobs/(?P<company>[-\w]+)/(?P<id>\d+)/(?P<position>[-\w]+)/(?P<location>[-\w]+)/$', 'jobs.views.show_job', name="front_jobs"),
     #url(r'^jobs/(?P<poll_id>\d+)/results/$', 'polls.views.results'),
     #url(r'^jobs/(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
     # Examples:

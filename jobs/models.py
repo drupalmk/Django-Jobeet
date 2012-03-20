@@ -1,5 +1,4 @@
 from django.db import models
-import uuid
 
 #class JobsManager(models.Manager):
 
@@ -9,12 +8,17 @@ class CategoriesManager(models.Manager):
                           where=["""jobs.category_id = categories.id"""])
 
 
-#class JobsManager(models.Manager):
- #   def get_active_jobs_by_category(self, cid, limit):
+class JobsManager(models.Manager):
+
+   def get_active_jobs_by_category(self, cat, limit):
+        import datetime
+        return self.filter(category=cat, is_activated=True, expires_at__gt=datetime.datetime.now()).values('id').order_by('expires_at', 'desc')[limit:]
         
 
 
 class Categories(models.Model):
+
+    active_jobs = []
 
     prepopulated_fields = {"slug": ("name",)}
 
@@ -64,7 +68,7 @@ class Jobs(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
     expires_at = models.DateTimeField()
 
-    #objects = JobsManager()
+    objects = JobsManager()
 
     def save(self, *args, **kwargs):
         import datetime
